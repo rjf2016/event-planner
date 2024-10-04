@@ -1,3 +1,4 @@
+import { sql, relations } from 'drizzle-orm';
 import {
   pgTable,
   serial,
@@ -24,8 +25,11 @@ export const PollTable = pgTable(
     id: serial('id').primaryKey(),
     name: varchar('name', { length: 255 }).notNull(),
     description: text('description').notNull(),
-    creatorId: varchar('creator_id', { length: 255 }).notNull(), // Clerk user ID
-    slug: varchar('slug', { length: 255 }).unique().notNull(),
+    creatorId: text('creatorId').notNull(),
+    slug: varchar('slug', { length: 255 })
+      .default(sql`substring(md5(random()::text), 1, 6)`)
+      .unique()
+      .notNull(),
     isClosed: boolean('is_closed').default(false).notNull(),
     createdAt,
     updatedAt,
@@ -140,3 +144,67 @@ export const invitationTable = pgTable(
     };
   }
 );
+
+// Relations
+export const pollRelations = relations(PollTable, ({ many }) => ({
+  eventDates: many(EventDateTable),
+  questions: many(QuestionTable),
+  votes: many(VoteTable),
+  invitations: many(invitationTable),
+}));
+
+export const eventDateRelations = relations(
+  EventDateTable,
+  ({ one, many }) => ({
+    poll: one(PollTable, {
+      fields: [EventDateTable.pollId],
+      references: [PollTable.id],
+    }),
+    votes: many(VoteTable),
+  })
+);
+
+export const questionRelations = relations(QuestionTable, ({ one, many }) => ({
+  poll: one(PollTable, {
+    fields: [QuestionTable.pollId],
+    references: [PollTable.id],
+  }),
+  options: many(QuestionOptionTable),
+}));
+
+export const questionOptionRelations = relations(
+  QuestionOptionTable,
+  ({ one, many }) => ({
+    question: one(QuestionTable, {
+      fields: [QuestionOptionTable.questionId],
+      references: [QuestionTable.id],
+    }),
+    votes: many(VoteTable),
+  })
+);
+
+export const voteRelations = relations(VoteTable, ({ one }) => ({
+  poll: one(PollTable, {
+    fields: [VoteTable.pollId],
+    references: [PollTable.id],
+  }),
+  date: one(EventDateTable, {
+    fields: [VoteTable.dateId],
+    references: [EventDateTable.id],
+  }),
+  option: one(QuestionOptionTable, {
+    fields: [VoteTable.optionId],
+    references: [QuestionOptionTable.id],
+  }),
+}));
+
+export const invitationRelations = relations(invitationTable, ({ one }) => ({
+  poll: one(PollTable, {
+    fields: [invitationTable.pollId],
+    references: [PollTable.id],
+  }),
+  selectedDate: one(EventDateTable, {
+    fields: [invitationTable.selectedDateId],
+    references: [EventDateTable.id],
+  }),
+}));

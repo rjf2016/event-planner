@@ -1,0 +1,1 @@
+ALTER TABLE "polls" ALTER COLUMN "slug" SET DEFAULT substring(md5(random()::text), 1, 6);
