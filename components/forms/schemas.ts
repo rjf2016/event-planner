@@ -41,18 +41,8 @@ export const pollFormSchema = z.object({
       (data) => data.from <= data.to,
       'End date must be after start date.'
     ),
-  questions: z
-    .array(
-      z.object({
-        questionText: z.string().min(1, 'Question is required'),
-        options: z
-          .array(
-            z.object({
-              optionText: z.string().min(1, 'Option text is required'),
-            })
-          )
-          .min(1, 'At least one option is required'),
-      })
-    )
-    .min(1, 'At least one question is required'),
+});
+
+export const guestFormSchema = z.object({
+  name: z.string().min(3, 'Name must be at least 3 characters long.'),
 });

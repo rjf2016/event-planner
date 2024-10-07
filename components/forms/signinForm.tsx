@@ -101,7 +101,12 @@ export default function SignInForm() {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="Password" {...field} />
+                    <Input
+                      type="password"
+                      placeholder="Password"
+                      autoComplete="current-password"
+                      {...field}
+                    />
                   </FormControl>
 
                   <FormMessage />
