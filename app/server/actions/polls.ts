@@ -8,6 +8,7 @@ import { redirect } from 'next/navigation';
 
 import { db } from '@/drizzle/db';
 import { pollFormSchema } from '@/components/forms/schemas';
+import { revalidatePath } from 'next/cache';
 
 // Helper function to generate an array of dates between two dates
 function generateDateRange(from: Date, to: Date): string[] {
@@ -59,5 +60,6 @@ export async function createPoll(
   // Insert the event dates into the EventDateTable
   await db.insert(EventDateTable).values(dateRecords);
 
+  revalidatePath('/dashboard');
   redirect('/dashboard');
 }

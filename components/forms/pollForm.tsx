@@ -49,7 +49,7 @@ export default function PollForm() {
       toast({
         variant: 'destructive',
         title: 'Error creating poll',
-        description: formResults.error,
+        description: 'An error occurred while creating the poll.',
       });
     }
   }
@@ -152,11 +152,10 @@ export default function PollForm() {
             className="mt-4"
             disabled={pollForm.formState.isSubmitting}
           >
-            {pollForm.formState.isSubmitting ? (
+            {pollForm.formState.isSubmitting && (
               <Loader2Icon className="animate-spin" />
-            ) : (
-              'Create Poll'
-            )}
+            )}{' '}
+            Create Poll
           </Button>
         </div>
       </form>

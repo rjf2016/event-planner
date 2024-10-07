@@ -105,6 +105,7 @@ export default function SignUpFormComponent({
                     <Input
                       type="password"
                       placeholder="Password"
+                      autoComplete="new-password"
                       {...field}
                       disabled={isLoading}
                     />

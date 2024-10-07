@@ -7,3 +7,10 @@ export const DAYS_OF_WEEK = [
   'Friday',
   'Saturday',
 ];
+
+export const PUBLIC_ROUTES: string[] = [
+  '/sign-in(.*)',
+  '/sign-up(.*)',
+  '/',
+  '/vote(.*)',
+];
