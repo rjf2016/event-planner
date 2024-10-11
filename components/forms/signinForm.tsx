@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -25,9 +26,16 @@ import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 import Link from 'next/link';
 import { signInFormSchema } from './schemas';
+import { EyeIcon, EyeOffIcon, Loader2Icon } from 'lucide-react';
 
 export default function SignInForm() {
   const { signIn, isLoaded, setActive } = useSignIn();
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const form = useForm<z.infer<typeof signInFormSchema>>({
     resolver: zodResolver(signInFormSchema),
@@ -41,6 +49,8 @@ export default function SignInForm() {
     if (!isLoaded) {
       return;
     }
+
+    setIsLoading(true);
 
     try {
       const result = await signIn.create({
@@ -60,6 +70,8 @@ export default function SignInForm() {
         title: 'Sign-in failed',
         description: 'Please check your credentials and try again.',
       });
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -80,6 +92,7 @@ export default function SignInForm() {
             <FormField
               control={form.control}
               name="email"
+              disabled={isLoading}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
@@ -97,18 +110,32 @@ export default function SignInForm() {
             <FormField
               control={form.control}
               name="password"
+              disabled={isLoading}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="Password"
-                      autoComplete="current-password"
-                      {...field}
-                    />
+                    <div className="relative">
+                      <Input
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder="Password"
+                        autoComplete="current-password"
+                        {...field}
+                      />
+                      <button
+                        type="button"
+                        tabIndex={-1}
+                        onClick={togglePasswordVisibility}
+                        className="absolute inset-y-0 right-0 px-3 flex items-center cursor-pointer text-muted-foreground"
+                      >
+                        {showPassword ? (
+                          <EyeOffIcon className="h-5 w-5" />
+                        ) : (
+                          <EyeIcon className="h-5 w-5" />
+                        )}
+                      </button>
+                    </div>
                   </FormControl>
-
                   <FormMessage />
                 </FormItem>
               )}
@@ -118,6 +145,9 @@ export default function SignInForm() {
               type="submit"
               className="mt-4 w-1/2 mx-auto"
             >
+              {isLoading && (
+                <Loader2Icon className="animate-spin mr-1 w-4 h-4" />
+              )}
               Submit
             </Button>
           </form>

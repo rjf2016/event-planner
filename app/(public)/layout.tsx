@@ -16,7 +16,7 @@ export default function PublicLayout({
           <UserButton />
         </div>
       </nav>
-      <main className="flex flex-col p-4 w-full">{children}</main>
+      <main className="flex flex-col px-4 w-full">{children}</main>
     </div>
   );
 }
