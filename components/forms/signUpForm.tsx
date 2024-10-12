@@ -23,7 +23,8 @@ export default function SignUpForm() {
 
     try {
       const result = await signUp.create({
-        username: data.username,
+        firstName: data.firstName,
+        lastName: data.lastName,
         emailAddress: data.email,
         password: data.password,
       });

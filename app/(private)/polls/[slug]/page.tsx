@@ -9,10 +9,9 @@ import {
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { CheckCircleIcon, Edit } from 'lucide-react';
-import CalendarDay from '@/components/CalendarDay';
 import ShareButton from '@/components/ShareButton';
 import { headers } from 'next/headers';
-import { cn } from '@/lib/utils';
+import DateResult from '@/components/DateResult';
 
 export default async function PollViewPage({
   params,
@@ -40,50 +39,45 @@ export default async function PollViewPage({
     return <div>Poll not found</div>;
   }
 
-  const getVoteCountForDate = (dateId: number) => {
-    return poll.votes.filter((vote) => vote.dateId === dateId).length;
+  const getVotesForDate = (dateId: number) => {
+    return poll.votes
+      .filter((vote) => vote.dateId === dateId)
+      .map((vote) => vote.guestName);
   };
+
+  const dateVotes = poll.eventDates.map((date) => ({
+    date,
+    votes: getVotesForDate(date.id),
+  }));
 
   return (
     <Card>
-      <CardHeader className="px-4 md:px-6 lg:px-8 flex flex-row justify-between">
-        <div>
-          <CardTitle className="text-2xl">{poll.name}</CardTitle>
-          <CardDescription>{poll.description}</CardDescription>
-        </div>
-        <div className="flex flex-col lg:flex-row space-x-0 lg:space-x-2 space-y-2 lg:space-y-0">
-          <ShareButton shareUrl={shareUrl} size="sm" />
-          <Button variant={'outline'} size={'sm'}>
-            <Edit className="mr-2 h-4 w-4" />
-            Edit
-          </Button>
+      <CardHeader className="space-y-4">
+        <div className="flex flex-row justify-between items-center">
+          <div className="space-x-2 flex items-center">
+            <ShareButton shareUrl={shareUrl} size="sm" />
+            <Button variant={'outline'} size={'sm'}>
+              <Edit className="mr-2 h-3.5 w-3.5" />
+              Edit
+            </Button>
+          </div>
           <Button variant={'primary'} size={'sm'}>
-            <CheckCircleIcon className="mr-2 h-4 w-4" />
+            <CheckCircleIcon className="mr-2 h-3.5 w-3.5" />
             Complete
           </Button>
         </div>
+        <div>
+          <CardTitle className="text-lg">{poll.name}</CardTitle>
+          <CardDescription>{poll.description}</CardDescription>
+        </div>
       </CardHeader>
-      <CardContent className="px-4 md:px-6 lg:px-6">
+      <CardContent>
         <div className="flex flex-col space-y-4">
           <h2 className="font-semibold">Event Dates</h2>
-          <div className="grid gap-2 grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
-            {poll.eventDates.map((date) => {
-              const voteCount = getVoteCountForDate(date.id);
-              return (
-                <Card
-                  key={date.date}
-                  className={cn(
-                    'min-w-32 h-32 overflow-hidden flex flex-col',
-                    voteCount <= 0 && 'bg-muted/50 shadow-none'
-                  )}
-                >
-                  <CalendarDay date={date.date} />
-                  <p className="text-sm text-muted-foreground text-center mb-2">
-                    {getVoteCountForDate(date.id)} votes
-                  </p>
-                </Card>
-              );
-            })}
+          <div className="grid gap-1 md:gap-2 grid-cols-3 md:grid-cols-4 lg:grid-cols-5 ">
+            {dateVotes.map(({ date, votes }) => (
+              <DateResult key={date.id} date={date} votes={votes} />
+            ))}
           </div>
         </div>
       </CardContent>

@@ -48,9 +48,14 @@ export default async function DashboardPage() {
               </TableHeader>
               <TableBody>
                 {polls.map((poll) => (
-                  <TableRow key={poll.name} className="h-12">
+                  <TableRow key={poll.slug} className="h-12">
                     <TableCell className="font-medium">
-                      <Link href={`/polls/${poll.slug}`}>{poll.name}</Link>
+                      <Link
+                        href={`/polls/${poll.slug}`}
+                        className="block w-full h-full"
+                      >
+                        {poll.name}
+                      </Link>
                     </TableCell>
                     <TableCell className="text-right text-secondary">
                       Active

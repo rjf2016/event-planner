@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { CheckCheckIcon, Copy, Share2Icon } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 type ShareButtonProps = {
   shareUrl: string;
@@ -35,7 +36,9 @@ export default function ShareButton({ shareUrl, size }: ShareButtonProps) {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant={'outline'} size={size}>
-          <Share2Icon className="mr-2 h-4 w-4" />
+          <Share2Icon
+            className={cn('mr-2 h-4 w-4', size === 'sm' && 'h-3.5 w-3.5')}
+          />
           Share
         </Button>
       </DialogTrigger>
@@ -53,7 +56,11 @@ export default function ShareButton({ shareUrl, size }: ShareButtonProps) {
             </Label>
             <Input id="link" defaultValue={shareUrl} readOnly />
           </div>
-          <Button size="sm" className="px-3" onClick={handleCopy}>
+          <Button
+            variant={'outline'}
+            className="h-full rounded-lg"
+            onClick={handleCopy}
+          >
             <span className="sr-only">Copy</span>
             {isCopied ? (
               <CheckCheckIcon className="h-4 w-4 text-green-600 animate-slide-up" />
@@ -62,7 +69,7 @@ export default function ShareButton({ shareUrl, size }: ShareButtonProps) {
             )}
           </Button>
         </div>
-        <DialogFooter className="sm:justify-start">
+        <DialogFooter className="sm:justify-start mt-2 sm:mt-0">
           <DialogClose asChild>
             <Button type="button" variant="primary">
               Close

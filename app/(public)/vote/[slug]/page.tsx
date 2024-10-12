@@ -58,10 +58,12 @@ export default async function VotePage({ params }: Props) {
   }
 
   return (
-    <div className="w-full h-full flex flex-col justify-center items-center space-y-8">
-      <header className="w-full mb-2">
-        <h1 className="text-2xl font-semibold text-center">{poll.name}</h1>
-        <p className="text-lg text-center">{poll.description}</p>
+    <div className="w-full h-full flex flex-col justify-center items-center space-y-4">
+      <header className="w-full text-center">
+        <h1 className="text-lg font-semibold text-pretty">{poll.name}</h1>
+        <p className="text-sm text-muted-foreground text-pretty">
+          {poll.description}
+        </p>
       </header>
 
       <Voter poll={poll} userId={userId} />

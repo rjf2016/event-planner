@@ -8,10 +8,10 @@ export default function CalendarDay({ date }: CalendarDayProps) {
   const day = dateObj.getDate();
 
   return (
-    <div className="w-full h-full flex flex-col justify-center text-center">
-      <h4 className="text-lg">{month}</h4>
+    <div className="flex flex-1 flex-col justify-center text-center">
+      <h4 className="">{month}</h4>
 
-      <h3 className="text-xl font-semibold">{day}</h3>
+      <h3 className="text-lg font-semibold">{day}</h3>
     </div>
   );
 }

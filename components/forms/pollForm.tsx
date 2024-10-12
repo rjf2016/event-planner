@@ -28,6 +28,7 @@ import { pollFormSchema } from './schemas';
 import { cn } from '@/lib/utils';
 import { createPoll } from '@/app/server/actions/polls';
 import { toast } from '@/hooks/use-toast';
+import Link from 'next/link';
 
 export default function PollForm() {
   const pollForm = useForm<z.infer<typeof pollFormSchema>>({
@@ -144,17 +145,20 @@ export default function PollForm() {
           )}
         />
 
-        <div className="flex gap-2 justify-end">
+        <div className="flex justify-between pt-6">
+          {/* cancel button */}
+          <Button type="button" variant={'outline'} asChild>
+            <Link href={'/dashboard'}>Cancel</Link>
+          </Button>
+
           <Button
             type="submit"
-            size={'lg'}
             variant={'primary'}
-            className="mt-4"
             disabled={pollForm.formState.isSubmitting}
           >
             {pollForm.formState.isSubmitting && (
-              <Loader2Icon className="animate-spin" />
-            )}{' '}
+              <Loader2Icon className="animate-spin mr-2" />
+            )}
             Create Poll
           </Button>
         </div>

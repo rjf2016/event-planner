@@ -1,4 +1,3 @@
-// components/forms/newUserForm.tsx
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -22,9 +21,9 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { Loader2Icon } from 'lucide-react';
+import { Loader2Icon, EyeIcon, EyeOffIcon } from 'lucide-react';
 import Link from 'next/link';
+import { useState } from 'react';
 import { newUserFormSchema } from './schemas';
 
 type SignUpFormProps = {
@@ -36,14 +35,20 @@ export default function SignUpFormComponent({
   onSubmit,
   isLoading,
 }: SignUpFormProps) {
+  const [showPassword, setShowPassword] = useState(false);
   const form = useForm<z.infer<typeof newUserFormSchema>>({
     resolver: zodResolver(newUserFormSchema),
     defaultValues: {
-      username: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
     },
   });
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   return (
     <Card className="max-w-md w-full">
@@ -53,7 +58,7 @@ export default function SignUpFormComponent({
           Enter your details below to create a new account
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-8">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -61,14 +66,32 @@ export default function SignUpFormComponent({
           >
             <FormField
               control={form.control}
-              name="username"
+              name="firstName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel>First Name</FormLabel>
                   <FormControl>
                     <Input
                       type="text"
-                      placeholder="Username"
+                      placeholder="First Name"
+                      {...field}
+                      disabled={isLoading}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="lastName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Last Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="Last Name"
                       {...field}
                       disabled={isLoading}
                     />
@@ -102,13 +125,27 @@ export default function SignUpFormComponent({
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="Password"
-                      autoComplete="new-password"
-                      {...field}
-                      disabled={isLoading}
-                    />
+                    <div className="relative">
+                      <Input
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder="Password"
+                        autoComplete="new-password"
+                        disabled={isLoading}
+                        {...field}
+                      />
+                      <button
+                        type="button"
+                        tabIndex={-1}
+                        onClick={togglePasswordVisibility}
+                        className="absolute inset-y-0 right-0 px-3 flex items-center text-muted-foreground"
+                      >
+                        {showPassword ? (
+                          <EyeOffIcon className="h-5 w-5" />
+                        ) : (
+                          <EyeIcon className="h-5 w-5" />
+                        )}
+                      </button>
+                    </div>
                   </FormControl>
                   {fieldState.error ? (
                     <FormMessage />
@@ -122,7 +159,6 @@ export default function SignUpFormComponent({
             />
             <Button
               variant={'primary'}
-              size={'lg'}
               type="submit"
               className="mt-4 w-1/2 mx-auto"
               disabled={isLoading}
@@ -131,7 +167,7 @@ export default function SignUpFormComponent({
             </Button>
           </form>
         </Form>
-        <Separator />
+
         <p className="text-center text-sm">
           {'Already have an account? '}
           <Button

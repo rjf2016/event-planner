@@ -13,4 +13,5 @@ export const PUBLIC_ROUTES: string[] = [
   '/sign-up(.*)',
   '/',
   '/vote(.*)',
+  '/api/vote(.*)',
 ];
