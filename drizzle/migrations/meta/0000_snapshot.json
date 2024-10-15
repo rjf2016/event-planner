@@ -1,5 +1,5 @@
 {
-  "id": "f46fbffa-0cac-4e5c-ba52-f16ca2c931ba",
+  "id": "c630dae6-d82c-4f45-910f-ef0a31e13471",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -98,9 +98,9 @@
           "primaryKey": false,
           "notNull": true
         },
-        "creator_id": {
-          "name": "creator_id",
-          "type": "varchar(255)",
+        "creatorId": {
+          "name": "creatorId",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },
@@ -108,7 +108,8 @@
           "name": "slug",
           "type": "varchar(255)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "substring(md5(random()::text), 1, 6)"
         },
         "is_closed": {
           "name": "is_closed",
