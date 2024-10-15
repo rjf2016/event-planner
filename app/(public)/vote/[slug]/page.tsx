@@ -29,8 +29,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: poll.description,
 
     openGraph: {
-      title: 'Vote Now!',
-      description: `${poll.name}`,
+      title: `${poll.name}`,
+      description: 'Vote Now!',
       siteName: 'Event Planner',
       type: 'website',
       images: {
