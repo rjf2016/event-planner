@@ -12,6 +12,7 @@ import { CheckCircleIcon, Edit } from 'lucide-react';
 import ShareButton from '@/components/ShareButton';
 import { headers } from 'next/headers';
 import DateResult from '@/components/DateResult';
+import BackButton from '@/components/BackButton';
 
 export default async function PollViewPage({
   params,
@@ -36,7 +37,17 @@ export default async function PollViewPage({
   });
 
   if (!poll) {
-    return <div>Poll not found</div>;
+    return (
+      <div className="min-h-[70vh] text-center flex flex-col items-center justify-center">
+        <h1 className="text-2xl font-semibold">Poll not found</h1>
+        <p className="text-muted-foreground">
+          The poll you are looking for does not exist.
+        </p>
+        <BackButton variant={'super'} className="mt-4">
+          Back
+        </BackButton>
+      </div>
+    );
   }
 
   const getVotesForDate = (dateId: number) => {
@@ -54,15 +65,15 @@ export default async function PollViewPage({
     <Card>
       <CardHeader className="space-y-4">
         <div className="flex flex-row justify-between items-center">
-          <div className="space-x-2 flex items-center">
-            <ShareButton shareUrl={shareUrl} size="sm" />
+          <div className="space-x-1 flex items-center">
             <Button variant={'outline'} size={'sm'}>
-              <Edit className="mr-2 h-3.5 w-3.5" />
+              <Edit className="mr-1.5 h-3.5 w-3.5" />
               Edit
             </Button>
+            <ShareButton shareUrl={shareUrl} size="sm" />
           </div>
           <Button variant={'primary'} size={'sm'}>
-            <CheckCircleIcon className="mr-2 h-3.5 w-3.5" />
+            <CheckCircleIcon className="mr-1.5 h-3.5 w-3.5" />
             Complete
           </Button>
         </div>

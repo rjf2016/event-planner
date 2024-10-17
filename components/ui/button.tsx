@@ -12,8 +12,7 @@ const buttonVariants = cva(
         default: 'bg-white text-slate-500 border-slate-200 hover:bg-slate-100 ',
         outline:
           'border border-input bg-transparent hover:bg-accent hover:text-accent-foreground',
-        primary:
-          'bg-primary text-primary-foreground hover:bg-primary/85 border-primary-contrast',
+        primary: 'bg-primary text-white hover:bg-primary-contrast',
         primaryOutline:
           'bg-background border-primary text-primary hover:bg-slate-100',
         secondary:
@@ -26,8 +25,7 @@ const buttonVariants = cva(
         super:
           'bg-gradient-to-br from-purple-500 to-super text-super-foreground hover:to-super/85 border-super-contrast',
         superOutline: 'bg-background text-super hover:bg-slate-100',
-        ghost:
-          'bg-transparent text-slate-500 border-transparent border-0 hover:bg-slate-100',
+        ghost: 'bg-transparent border-transparent border-0 hover:bg-slate-100',
         link: 'text-primary underline-offset-4 hover:underline',
       },
       size: {

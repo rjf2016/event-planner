@@ -86,7 +86,7 @@ export default function Voter({ poll, userId }: VoterProps) {
                 className={cn(
                   'w-full aspect-square flex flex-col cursor-pointer select-none',
                   selectedDates.includes(date.id)
-                    ? 'bg-green-100 border-green-500'
+                    ? 'bg-success/10 border-success'
                     : 'hover:bg-muted/50'
                 )}
               >

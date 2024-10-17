@@ -145,6 +145,20 @@ export const invitationTable = pgTable(
   }
 );
 
+export type SelectPoll = typeof PollTable.$inferSelect;
+export type SelectEventDate = typeof EventDateTable.$inferSelect;
+export type SelectQuestion = typeof QuestionTable.$inferSelect;
+export type SelectQuestionOption = typeof QuestionOptionTable.$inferSelect;
+export type SelectVote = typeof VoteTable.$inferSelect;
+export type SelectInvitation = typeof invitationTable.$inferSelect;
+
+export type InsertPoll = typeof PollTable.$inferInsert;
+export type InsertEventDate = typeof EventDateTable.$inferInsert;
+export type InsertQuestion = typeof QuestionTable.$inferInsert;
+export type InsertQuestionOption = typeof QuestionOptionTable.$inferInsert;
+export type InsertVote = typeof VoteTable.$inferInsert;
+export type InsertInvitation = typeof invitationTable.$inferInsert;
+
 // Relations
 export const pollRelations = relations(PollTable, ({ many }) => ({
   eventDates: many(EventDateTable),

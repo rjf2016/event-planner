@@ -16,9 +16,9 @@ body {
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 243.4 75.3% 58.6%;
     --primary-foreground: 210 40% 98%;
-    --primary-contrast: 199 89% 48%;
+    --primary-contrast: 238.7 83.5% 66.6%;
     --secondary: 142 71% 45%;
     --secondary-foreground: 0 0% 100%;
     --secondary-contrast: 142 76% 36%;
@@ -29,6 +29,7 @@ body {
     --destructive: 350 89% 60%;
     --destructive-foreground: 0 0% 100%;
     --destructive-contrast: 347 77% 50%;
+    --success: 126 79% 33%;
     --super: 238.7 83.5% 66.6%;
     --super-foreground: 0 0% 100%;
     --super-contrast: 245 58% 51%;

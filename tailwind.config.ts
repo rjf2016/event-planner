@@ -54,6 +54,9 @@ const config: Config = {
           foreground: 'hsl(var(--destructive-foreground))',
           contrast: 'hsl(var(--destructive-contrast))',
         },
+        success: {
+          DEFAULT: 'hsl(var(--success))',
+        },
         super: {
           DEFAULT: 'hsl(var(--super))',
           foreground: 'hsl(var(--super-foreground))',

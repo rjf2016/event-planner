@@ -15,7 +15,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { CheckCheckIcon, Copy, Share2Icon } from 'lucide-react';
-import { cn } from '@/lib/utils';
 
 type ShareButtonProps = {
   shareUrl: string;
@@ -36,13 +35,11 @@ export default function ShareButton({ shareUrl, size }: ShareButtonProps) {
     <Dialog>
       <DialogTrigger asChild>
         <Button variant={'outline'} size={size}>
-          <Share2Icon
-            className={cn('mr-2 h-4 w-4', size === 'sm' && 'h-3.5 w-3.5')}
-          />
+          <Share2Icon className={'mr-1.5 h-3.5 w-3.5'} />
           Share
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md bg-card">
         <DialogHeader>
           <DialogTitle>Share link</DialogTitle>
           <DialogDescription>

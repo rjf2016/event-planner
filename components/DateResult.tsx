@@ -36,7 +36,7 @@ export default function DateResult({ date, votes }: DateResultProps) {
         <CalendarDay date={date.date} />
         <div className="absolute bottom-0.5 left-2 h-4 md:h-5">
           {hasVotes && (
-            <div className="flex flex-row justify-center items-center space-x-0.5 text-green-600">
+            <div className="flex flex-row justify-center items-center space-x-0.5 text-success">
               <UserRound fill="#dcfce7" className="w-3.5 h-3.5 md:w-4 md:h-4" />
               <p className="text-sm md:text-base">{votes?.length}</p>
             </div>
