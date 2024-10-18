@@ -38,14 +38,14 @@ export default async function PollViewPage({
 
   if (!poll) {
     return (
-      <div className="min-h-[70vh] text-center flex flex-col items-center justify-center">
-        <h1 className="text-2xl font-semibold">Poll not found</h1>
-        <p className="text-muted-foreground">
-          The poll you are looking for does not exist.
-        </p>
-        <BackButton variant={'super'} className="mt-4">
-          Back
-        </BackButton>
+      <div className="min-h-[70vh] text-center flex flex-col space-y-4 items-center justify-center">
+        <div>
+          <h1 className="text-2xl font-semibold">Poll not found</h1>
+          <p className="text-muted-foreground">
+            The poll you are looking for does not exist.
+          </p>
+        </div>
+        <BackButton variant={'primary'}>Back</BackButton>
       </div>
     );
   }

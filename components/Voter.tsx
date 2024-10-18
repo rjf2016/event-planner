@@ -16,6 +16,7 @@ import { cn } from '@/lib/utils';
 import CalendarDay from './CalendarDay';
 import { Poll } from '@/interfaces';
 import { Loader2Icon } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 type VoterProps = {
   poll: Poll;
@@ -23,9 +24,10 @@ type VoterProps = {
 };
 
 export default function Voter({ poll, userId }: VoterProps) {
-  const [name, setName] = useState('');
+  const [name, setName] = useState('test');
   const [selectedDates, setSelectedDates] = useState<number[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   if (!userId && !name) {
     return <GuestForm setName={setName} />;
@@ -57,37 +59,35 @@ export default function Voter({ poll, userId }: VoterProps) {
       });
 
       if (response.ok) {
-        console.log('Vote submitted successfully');
+        router.replace(`/vote/${poll.slug}/complete`);
       } else {
         console.log('Failed to submit vote - ', response);
       }
     } catch (error) {
       console.error('Error submitting vote:', error);
-    } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
     <Card className="w-full">
-      <CardHeader>
+      <CardHeader className="text-center">
         <CardTitle className="text-lg">{'Possible dates'}</CardTitle>
         <CardDescription>
           {'Select the days you would be available'}
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid gap-1 sm:gap-2 md:gap-2 grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 ">
+        <div className="flex flex-wrap gap-1 items-center justify-center ">
           {poll.eventDates.map((date) => {
             return (
               <Card
-                key={date.date}
+                key={date.id}
                 onClick={() => toggleDateSelection(date.id)}
                 className={cn(
-                  'w-full aspect-square flex flex-col cursor-pointer select-none',
-                  selectedDates.includes(date.id)
-                    ? 'bg-success/10 border-success'
-                    : 'hover:bg-muted/50'
+                  'w-[68px] md:w-20 lg:w-24 aspect-square flex flex-col cursor-pointer select-none shadow-none rounded-sm transition-colors',
+                  selectedDates.includes(date.id) &&
+                    'bg-emerald-100 border-emerald-300 text-emerald-950'
                 )}
               >
                 <CalendarDay date={date.date} />
@@ -100,11 +100,13 @@ export default function Voter({ poll, userId }: VoterProps) {
         <Button
           onClick={handleSubmitVote}
           variant={'primary'}
-          size={'lg'}
-          className="w-44 mx-auto"
-          disabled={!selectedDates.length}
+          className="w-40 mx-auto mt-2"
+          disabled={!selectedDates.length || isSubmitting}
         >
-          {isSubmitting && <Loader2Icon className="animate-spin mr-2" />} Submit
+          {isSubmitting && (
+            <Loader2Icon className="animate-spin mr-2 h-4 w-4" />
+          )}
+          Submit
         </Button>
       </CardFooter>
     </Card>

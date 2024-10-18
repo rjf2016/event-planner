@@ -11,7 +11,10 @@ export default function Home() {
   return (
     <div className="min-h-full p-4 flex flex-col justify-center items-center space-y-2">
       <header className="w-full text-center mb-2">
-        <h1 className="text-xl font-semibold">Event Planner</h1>
+        <h1 className="text-3xl font-bold bg-gradient-to-b from-purple-600 to-super  inline-block text-transparent bg-clip-text">
+          Event Planner
+        </h1>
+
         <p className="text-lg">Plan your events with ease</p>
       </header>
 

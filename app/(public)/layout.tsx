@@ -7,7 +7,7 @@ export default function PublicLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="min-h-full w-full max-w-5xl mx-auto flex flex-col space-y-4 items-center">
+    <div className="min-h-full w-full max-w-5xl mx-auto flex flex-col space-y-2 items-center">
       <nav className="flex flex-row justify-between items-center px-4 py-2 w-full text-center">
         <Link href="/" className="text-xl">
           🎉
@@ -16,7 +16,7 @@ export default function PublicLayout({
           <UserButton />
         </div>
       </nav>
-      <main className="flex flex-col px-4 w-full">{children}</main>
+      <main className="flex flex-col p-4 w-full">{children}</main>
     </div>
   );
 }

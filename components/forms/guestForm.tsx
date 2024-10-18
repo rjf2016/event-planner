@@ -40,7 +40,7 @@ export default function GuestForm({ setName }: GuestFormProps) {
 
   return (
     <div className="pt-8 w-full flex flex-col items-center">
-      <Card className="max-w-lg w-full pt-6">
+      <Card className="max-w-lg w-full pt-2">
         <CardHeader>
           <CardTitle>Enter your name to vote</CardTitle>
           <CardDescription>
